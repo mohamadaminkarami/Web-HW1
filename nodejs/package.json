@@ -3,5 +3,16 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/mohamadaminkarami/Web-HW1.git",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "ioredis": "^4.28.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  }
 }
