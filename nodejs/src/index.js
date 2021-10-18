@@ -16,7 +16,7 @@ app.get("/sha", async (req, res) => {
     res.send({ raw_string: rawString });
     return;
   }
-  res.statusCode = 404;
+  res.statusCode = 400;
   res.send({ errors: ["sha256 hash not found!"] });
 });
 
