@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:14-alpine
 WORKDIR /app
 
 COPY ./package.json package.json
@@ -7,4 +7,4 @@ RUN yarn install --production
 
 COPY . .
 
-RUN yarn start
+CMD [ "node", "src/index.js" ]
