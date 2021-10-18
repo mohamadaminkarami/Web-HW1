@@ -7,7 +7,7 @@ const redis = require("./redis");
 const app = express();
 app.use(express.json());
 
-app.get("/node/sha256", async (req, res) => {
+app.get("/sha", async (req, res) => {
   const { encoded } = req.query;
 
   const rawString = await redis.get(encoded);
@@ -24,7 +24,7 @@ app.listen(PORT, () => {
   console.log(`codec app started on port ${PORT}`);
 });
 
-app.post("/node/sha256", async (req, res) => {
+app.post("/sha", async (req, res) => {
   const { raw_string: rawString } = req.body;
 
   if (rawString.length >= 8) {
