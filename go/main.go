@@ -2,7 +2,11 @@ package main
 
 import (
 	"context"
+	"crypto/sha256"
+	"encoding/hex"
+	"io"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
@@ -20,16 +24,16 @@ func main() {
 }
 
 func getHash(c *gin.Context) {
-	key := c.Query("key")
+	encoded := c.Query("encoded")
 
-	if key == "" {
+	if encoded == "" {
 		c.JSON(http.StatusBadRequest, map[string]string{
-			"detail": "key param is required",
+			"detail": "encoded param is required",
 		})
 		return
 	}
 
-	value, err := getValueRedis(key)
+	value, err := getValueRedis(encoded)
 
 	switch {
 	case err == redis.Nil:
@@ -42,26 +46,34 @@ func getHash(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"value": value,
+		"detail": value,
 	})
 }
 
 func setHash(c *gin.Context) {
-	key := c.PostForm("key")
-	value := c.PostForm("value")
+	decoded := c.PostForm("decoded")
 
-	if key == "" || value == "" {
+	if len(decoded) < 8 {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"detail": "key & value are required",
+			"detail": "input must be at least 8 characters",
 		})
 		return
 	}
 
-	err := setValueRedis(key, value)
+	input := strings.NewReader(decoded)
+
+	hash := sha256.New()
+	if _, err := io.Copy(hash, input); err != nil {
+		panic(err)
+	}
+	sum := hash.Sum(nil)
+	encoded := hex.EncodeToString(sum)
+
+	err := setValueRedis(encoded, decoded)
 	if err != nil {
 		panic(err)
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"detail": key + " set to " + value,
+		"detail": encoded,
 	})
 }
