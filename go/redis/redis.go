@@ -2,8 +2,9 @@ package redis
 
 import (
 	"context"
-	"github.com/mohamadaminkarami/Web-HW1/utils"
 	"strconv"
+
+	"github.com/mohamadaminkarami/Web-HW1/utils"
 
 	"github.com/go-redis/redis/v8"
 )
@@ -13,7 +14,6 @@ var rdb = initRedis()
 
 func initRedis() *redis.Client {
 	redisDB, err := strconv.Atoi(utils.GetEnv("REDIS_DB", "0"))
-
 	if err != nil {
 		panic(err)
 	}

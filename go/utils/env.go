@@ -15,6 +15,8 @@ func LoadEnv() {
 }
 
 func GetEnv(key, fallback string) string {
+	LoadEnv()
+
 	value := os.Getenv(key)
 	if len(value) == 0 {
 		return fallback

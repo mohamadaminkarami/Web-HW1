@@ -15,8 +15,6 @@ import (
 )
 
 func main() {
-	utils.LoadEnv()
-
 	router := gin.Default()
 	router.GET("go/sha", getHash)
 	router.POST("go/sha", setHash)
