@@ -8,23 +8,19 @@ function isRawStringValid(rawString) {
     return true;
 }
 
-async function getapi(url) {
-    // Storing response
-    const response = await fetch(url);
-    // Storing data in form of JSON
-    var data = await response.json();
-    console.log(data);
-    return data;
+async function getEncodedString(url, encodedString) {
+    const response = await fetch(`${url}?encoded=${encodedString}`);
+    return response;
 }
 
 async function submitRawString(url, body) {
     const json_body = JSON.stringify(body)
     console.log(`Going to send post request, url=${url} body=${json_body}`);
     const rawResponse = await fetch(url, {
-        method: "POST",
+        method: 'POST',
         headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
         },
         body: json_body,
     });
@@ -32,24 +28,45 @@ async function submitRawString(url, body) {
     return content;
 }
 
-const node_btn = document.querySelector('#rawStringSubmitButton');
+const nodeRawStringSubmitButton = document.querySelector('#rawStringSubmitButton');
 
-node_btn.addEventListener('click', async (event) => {
-    const rawString = document.querySelector("#rawStringInput").value;
+nodeRawStringSubmitButton.addEventListener('click', async (event) => {
+    const rawString = document.querySelector('#rawStringInput').value;
     console.log(rawString);
-    const rawStringResponseContainer = document.querySelector("#rawStringSubmitResponseContainer");
+    const rawStringResponseContainer = document.querySelector('#rawStringSubmitResponseContainer');
     rawStringResponseContainer.innerHTML = '';
     var responseContainer = null;
     if (isRawStringValid(rawString)) {
         console.log('success');
-        const response = await submitRawString(node_url, { raw_string: rawString });
-        responseContainer = getSuccessComponent(`${JSON.stringify(response)}`);
+        const responseData = await submitRawString(node_url, { raw_string: rawString });
+        responseContainer = getSuccessComponent(`Your Hashed String: ${JSON.stringify(responseData.encoded)}`);
     } else {
         console.log('failure');
         responseContainer = getAlertComponent('Input should at least be 8 characters.');
     }
     rawStringResponseContainer.innerHTML = responseContainer.innerHTML;
 });
+
+const nodeGetStringSubmitButton = document.querySelector('#encodedStringSubmitButton');
+
+nodeGetStringSubmitButton.addEventListener('click', async (event) => {
+    const encodedString = document.querySelector('#encodedStringInput').value;
+    console.log(encodedString);
+    const encodedStringResponseContainer = document.querySelector('#encodedStringSubmitResponseContainer');
+    encodedStringResponseContainer.innerHTML = '';
+    var responseContainer = null;
+    const response = await getEncodedString(node_url, encodedString);
+    var data = await response.json();
+    console.log(data);
+    var status = response.status;
+    if (status==200) {
+        responseContainer = getSuccessComponent(`Your Original String: ${JSON.stringify(data.raw_string)}`);
+    } else {
+        responseContainer = getAlertComponent(`${JSON.stringify(data.errors[0])}`);
+    }
+    encodedStringResponseContainer.innerHTML = responseContainer.innerHTML;
+});
+
 
 function createHtmlElement(htmlString) {
     const parent = document.createElement('div');
