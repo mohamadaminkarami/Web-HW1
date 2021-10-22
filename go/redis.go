@@ -1,14 +1,22 @@
 package main
 
 import (
+	"strconv"
+
 	"github.com/go-redis/redis/v8"
 )
 
 func initRedis() *redis.Client {
+	redisDB, err := strconv.Atoi(getenv("redis_db", "0"))
+
+	if err != nil {
+		panic(err)
+	}
+
 	return redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
-		Password: "", // no password set
-		DB:       0,  // use default DB
+		Addr:     getenv("redis_addr", "localhost:6379"),
+		Password: getenv("redis_password", ""), // no password set
+		DB:       redisDB,                      // use default DB
 	})
 }
 

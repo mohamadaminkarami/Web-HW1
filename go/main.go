@@ -16,11 +16,13 @@ var ctx = context.Background()
 var rdb = initRedis()
 
 func main() {
+	loadEnv()
+
 	router := gin.Default()
 	router.GET("/sha", getHash)
 	router.POST("/sha", setHash)
 
-	router.Run("localhost:8080")
+	router.Run(getenv("server_addr", "localhost:8080"))
 }
 
 func getHash(c *gin.Context) {
