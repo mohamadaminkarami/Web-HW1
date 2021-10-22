@@ -1,9 +1,10 @@
 package main
 
 import (
-	"context"
 	"crypto/sha256"
 	"encoding/hex"
+	redisInterface "github.com/mohamadaminkarami/Web-HW1/redis"
+	"github.com/mohamadaminkarami/Web-HW1/utils"
 	"io"
 	"net/http"
 	"strings"
@@ -12,17 +13,17 @@ import (
 	"github.com/go-redis/redis/v8"
 )
 
-var ctx = context.Background()
-var rdb = initRedis()
-
 func main() {
-	loadEnv()
+	utils.LoadEnv()
 
 	router := gin.Default()
 	router.GET("/sha", getHash)
 	router.POST("/sha", setHash)
 
-	router.Run(getenv("server_addr", "localhost:8080"))
+	err := router.Run(utils.GetEnv("server_addr", "localhost:8080"))
+	if err != nil {
+		panic(err)
+	}
 }
 
 func getHash(c *gin.Context) {
@@ -35,7 +36,7 @@ func getHash(c *gin.Context) {
 		return
 	}
 
-	value, err := getValueRedis(encoded)
+	value, err := redisInterface.GetValueRedis(encoded)
 
 	switch {
 	case err == redis.Nil:
@@ -71,7 +72,7 @@ func setHash(c *gin.Context) {
 	sum := hash.Sum(nil)
 	encoded := hex.EncodeToString(sum)
 
-	err := setValueRedis(encoded, decoded)
+	err := redisInterface.SetValueRedis(encoded, decoded)
 	if err != nil {
 		panic(err)
 	}

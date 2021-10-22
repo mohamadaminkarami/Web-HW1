@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"os"
@@ -6,7 +6,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func loadEnv() {
+func LoadEnv() {
 	err := godotenv.Load(".env")
 
 	if err != nil {
@@ -14,7 +14,7 @@ func loadEnv() {
 	}
 }
 
-func getenv(key, fallback string) string {
+func GetEnv(key, fallback string) string {
 	value := os.Getenv(key)
 	if len(value) == 0 {
 		return fallback
