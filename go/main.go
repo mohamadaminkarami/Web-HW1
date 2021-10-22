@@ -18,8 +18,8 @@ func main() {
 	utils.LoadEnv()
 
 	router := gin.Default()
-	router.GET("/sha", getHash)
-	router.POST("/sha", setHash)
+	router.GET("go/sha", getHash)
+	router.POST("go/sha", setHash)
 
 	err := router.Run(utils.GetEnv("SERVER_ADDR", "0.0.0.0:8080"))
 	if err != nil {

@@ -7,7 +7,7 @@ services:
       - 8000:80
     depends_on:
       - node_backend
-      # - go_backend
+      - go_backend
 
   node_backend:
     build: ./nodejs
@@ -16,12 +16,12 @@ services:
     depends_on:
       - redis
 
-  #   go_backend:
-  #     build: ./go
-  #     ports:
-  #       - 8080:8080
-  #     depends_on:
-  #       - redis
+  go_backend:
+    build: ./go
+    ports:
+      - 8080:8080
+    depends_on:
+      - redis
 
   redis:
     image: redis
