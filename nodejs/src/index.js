@@ -5,9 +5,10 @@ const { PORT } = require("./config");
 const redis = require("./redis");
 
 const app = express();
-app.use(express.json());
+const router = express.Router();
+router.use(express.json());
 
-app.get("/sha", async (req, res) => {
+router.get("/sha", async (req, res) => {
   const { encoded } = req.query;
 
   const rawString = await redis.get(encoded);
@@ -16,15 +17,11 @@ app.get("/sha", async (req, res) => {
     res.send({ raw_string: rawString });
     return;
   }
-  res.statusCode = 404;
+  res.statusCode = 400;
   res.send({ errors: ["sha256 hash not found!"] });
 });
 
-app.listen(PORT, () => {
-  console.log(`codec app started on port ${PORT}`);
-});
-
-app.post("/sha", async (req, res) => {
+router.post("/sha", async (req, res) => {
   const { raw_string: rawString } = req.body;
 
   if (rawString.length >= 8) {
@@ -39,4 +36,9 @@ app.post("/sha", async (req, res) => {
 
   res.statusCode = 400;
   res.send({ errors: ["raw_staring must be at least 8 characters"] });
+});
+
+app.use('/node', router);
+app.listen(PORT, () => {
+  console.log(`codec app started on port ${PORT}`);
 });
