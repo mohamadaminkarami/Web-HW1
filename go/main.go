@@ -3,11 +3,12 @@ package main
 import (
 	"crypto/sha256"
 	"encoding/hex"
-	redisInterface "github.com/mohamadaminkarami/Web-HW1/redis"
-	"github.com/mohamadaminkarami/Web-HW1/utils"
 	"io"
 	"net/http"
 	"strings"
+
+	redisInterface "github.com/mohamadaminkarami/Web-HW1/redis"
+	"github.com/mohamadaminkarami/Web-HW1/utils"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
@@ -20,7 +21,7 @@ func main() {
 	router.GET("/sha", getHash)
 	router.POST("/sha", setHash)
 
-	err := router.Run(utils.GetEnv("SERVER_ADDR", "localhost:8080"))
+	err := router.Run(utils.GetEnv("SERVER_ADDR", "0.0.0.0:8080"))
 	if err != nil {
 		panic(err)
 	}
