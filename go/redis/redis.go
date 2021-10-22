@@ -12,16 +12,16 @@ var ctx = context.Background()
 var rdb = initRedis()
 
 func initRedis() *redis.Client {
-	redisDB, err := strconv.Atoi(utils.GetEnv("redis_db", "0"))
+	redisDB, err := strconv.Atoi(utils.GetEnv("REDIS_DB", "0"))
 
 	if err != nil {
 		panic(err)
 	}
 
 	return redis.NewClient(&redis.Options{
-		Addr:     utils.GetEnv("redis_addr", "localhost:6379"),
-		Password: utils.GetEnv("redis_password", ""), // no password set
-		DB:       redisDB,                            // use default DB
+		Addr:     utils.GetEnv("REDIS_ADDR", "localhost:6379"),
+		Password: utils.GetEnv("REDIS_PASSWORD", ""), // no password set
+		DB:       redisDB,                            // use default DB = 0
 	})
 }
 

@@ -20,7 +20,7 @@ func main() {
 	router.GET("/sha", getHash)
 	router.POST("/sha", setHash)
 
-	err := router.Run(utils.GetEnv("server_addr", "localhost:8080"))
+	err := router.Run(utils.GetEnv("SERVER_ADDR", "localhost:8080"))
 	if err != nil {
 		panic(err)
 	}
