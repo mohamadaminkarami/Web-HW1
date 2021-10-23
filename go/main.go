@@ -52,8 +52,17 @@ func getHash(c *gin.Context) {
 	})
 }
 
+type HashSting struct {
+	RawString string `form:"raw_string" json:"raw_string" xml:"raw_string"  binding:"required"`
+}
+
 func setHash(c *gin.Context) {
-	raw_string := c.PostForm("raw_string")
+	var json HashSting
+	if err := c.ShouldBindJSON(&json); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	raw_string := json.RawString
 
 	if len(raw_string) < 8 {
 		c.JSON(http.StatusBadRequest, gin.H{

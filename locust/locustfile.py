@@ -39,5 +39,5 @@ class CustomUser(HttpUser):
     def set_sha_go(self):
         decoded = get_random_string()
         self.client.post("/go/sha", {
-            "decoded": decoded
+            "raw_string": decoded
         })
