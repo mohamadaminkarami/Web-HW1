@@ -48,8 +48,8 @@ router.post("/sha", async (req, res) => {
   res.send({ encoded });
 });
 
-app.use("/node", router);
 
+app.use(router);
 app.listen(PORT, () => {
   console.log(`codec app started on port ${PORT}`);
 });

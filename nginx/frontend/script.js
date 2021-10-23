@@ -1,5 +1,5 @@
-const go_url = 'http://localhost:8000/go/sha/';
-const node_url = 'http://localhost:8000/node/sha/';
+const go_url = 'http://localhost:8000/go/sha256/';
+const node_url = 'http://localhost:8000/node/sha256/';
 
 
 function isRawStringValid(rawString) {
