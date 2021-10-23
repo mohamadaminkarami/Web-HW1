@@ -1,9 +1,14 @@
 FROM golang:alpine
 
 WORKDIR /go/src/app
+
+COPY go.mod ./
+COPY go.sum ./
+RUN go mod download
+
 COPY . .
 
-RUN go get -d -v ./...
-RUN go install -v ./...
+RUN go build -o /go-backend
 
-CMD ["go", "run", "main.go"]
+EXPOSE 8080
+CMD [ "/go-backend" ]
