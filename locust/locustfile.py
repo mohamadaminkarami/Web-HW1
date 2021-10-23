@@ -26,9 +26,8 @@ class CustomUser(HttpUser):
     @task(10)
     def set_sha_node(self):
         decoded = get_random_string()
-        self.client.post("/node/sha", {
-            "raw_string": decoded
-        })
+        data = {"raw_string": decoded}
+        self.client.post("/node/sha", json=data)
 
     @task
     def get_sha_go(self):
@@ -38,6 +37,5 @@ class CustomUser(HttpUser):
     @task(10)
     def set_sha_go(self):
         decoded = get_random_string()
-        self.client.post("/go/sha", {
-            "raw_string": decoded
-        })
+        data = {"raw_string": decoded}
+        self.client.post("/go/sha", json=data)
