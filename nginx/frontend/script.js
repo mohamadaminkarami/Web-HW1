@@ -28,6 +28,14 @@ async function submitRawString(url, body) {
     return content;
 }
 
+function getCurrentBackendUrl() {
+    if (document.querySelector('input[type="radio"]:checked').id == 'goRadio') {
+        return go_url;
+    } else {
+        return node_url;
+    }
+}
+
 const nodeRawStringSubmitButton = document.querySelector('#rawStringSubmitButton');
 
 nodeRawStringSubmitButton.addEventListener('click', async (event) => {
@@ -38,8 +46,8 @@ nodeRawStringSubmitButton.addEventListener('click', async (event) => {
     var responseContainer = null;
     if (isRawStringValid(rawString)) {
         console.log('success');
-        const responseData = await submitRawString(node_url, { raw_string: rawString });
-        responseContainer = getSuccessComponent(`Your Hashed String: ${JSON.stringify(responseData.encoded)}`);
+        const responseData = await submitRawString(getCurrentBackendUrl(), { raw_string: rawString });
+        responseContainer = getSuccessComponent(`${JSON.stringify(responseData)}`);
     } else {
         console.log('failure');
         responseContainer = getAlertComponent('Input should at least be 8 characters.');
@@ -55,18 +63,35 @@ nodeGetStringSubmitButton.addEventListener('click', async (event) => {
     const encodedStringResponseContainer = document.querySelector('#encodedStringSubmitResponseContainer');
     encodedStringResponseContainer.innerHTML = '';
     var responseContainer = null;
-    const response = await getEncodedString(node_url, encodedString);
-    var data = await response.json();
-    console.log(data);
+    const response = await getEncodedString(getCurrentBackendUrl(), encodedString);
+    const responseData = await response.json();
+    console.log(responseData);
     var status = response.status;
     if (status==200) {
-        responseContainer = getSuccessComponent(`Your Original String: ${JSON.stringify(data.raw_string)}`);
+        responseContainer = getSuccessComponent(`${JSON.stringify(responseData)}`);
     } else {
-        responseContainer = getAlertComponent(`${JSON.stringify(data.errors[0])}`);
+        responseContainer = getAlertComponent(`${JSON.stringify(responseData)}`);
     }
     encodedStringResponseContainer.innerHTML = responseContainer.innerHTML;
 });
 
+const resetButton = document.querySelector('#resetButton');
+resetButton.addEventListener('click', ()=> {
+    document.querySelectorAll('.response-container').forEach(element => {
+        element.innerHTML = '';
+    });
+    document.querySelectorAll('input[type="text"]').forEach(element => {
+        element.value = '';
+    });
+});
+
+const radioButtons = document.querySelectorAll('input[type="radio"]');
+radioButtons.forEach(element => {
+    element.addEventListener('click', ()=> {
+        const labelText = document.querySelector(`label[for="${element.id}"]`).innerText;
+        document.querySelector('#cardHeader').innerText = `Submit Requests To ${labelText}`;
+    });
+});
 
 function createHtmlElement(htmlString) {
     const parent = document.createElement('div');

@@ -25,31 +25,80 @@
 
     <div class="container">
         <h1>Hello, There!</h1>
-        <div id="rawStringFormContainer" class="row">
-            <form>
-                <div class="form-group">
-                    <label for="rawStringInput">Raw String</label>
-                    <input type="text" class="form-control" id="rawStringInput" aria-describedby="rawInputHelp"
-                        placeholder="Enter your raw string" minlength="8">
-                    <small id="rawInputHelp" class="form-text text-muted">We'll never share your raw string with anyone
-                        else.</small>
+        <div class="card">
+            <div class="card-header text-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                        </div>
+                        <div id="cardHeader" class="col-6 pt-2">
+                            Submit Requests To Go Backend!
+                        </div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                </div>
+                                <div class="col">
+                                </div>
+                                <div class="col">
+                                    <button id="resetButton" class="btn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                                            fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                                            <path
+                                                d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
+                                            <path fill-rule="evenodd"
+                                                d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <button id="rawStringSubmitButton" type="button" class="btn btn-primary">Submit</button>
-            </form>
-            <div id="rawStringSubmitResponseContainer" class="py-2"></div>
+            </div>
+            <div class="card-body">
+                <div id="rawStringFormContainer" class="row">
+                    <form>
+                        <div class="form-group">
+                            <label for="rawStringInput">Raw String</label>
+                            <input type="text" class="form-control" id="rawStringInput" aria-describedby="rawInputHelp"
+                                placeholder="Enter your raw string" minlength="8">
+                            <small id="rawInputHelp" class="form-text text-muted">We'll never share your raw string with
+                                anyone
+                                else.</small>
+                        </div>
+                        <button id="rawStringSubmitButton" type="button" class="btn btn-primary">Submit</button>
+                    </form>
+                    <div id="rawStringSubmitResponseContainer" class="py-2 response-container"></div>
+                </div>
+                <div id="encodedFormContainer" class="row">
+                    <form>
+                        <div class="form-group">
+                            <label for="rawStringInput">Encoded String</label>
+                            <input type="text" class="form-control" id="encodedStringInput"
+                                aria-describedby="encodedInputHelp" placeholder="Enter your encoded string">
+                            <small id="encodedInputHelp" class="form-text text-muted">We'll never share your encoded
+                                string with
+                                anyone else.</small>
+                        </div>
+                        <button id="encodedStringSubmitButton" type="button" class="btn btn-primary">Submit</button>
+                    </form>
+                    <div id="encodedStringSubmitResponseContainer" class="py-2 response-container"></div>
+                </div>
+            </div>
+            <div class="card-footer text-muted text-center">
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradio" id="goRadio" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="goRadio">Go Backend</label>
+
+                    <input type="radio" class="btn-check" name="btnradio" id="nodeRadio" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="nodeRadio">Node Backend</label>
+                </div>
+            </div>
         </div>
-        <div id="encodedFormContainer" class="row">
-            <form>
-                <div class="form-group">
-                    <label for="rawStringInput">Encoded String</label>
-                    <input type="text" class="form-control" id="encodedStringInput" aria-describedby="encodedInputHelp"
-                        placeholder="Enter your encoded string">
-                    <small id="encodedInputHelp" class="form-text text-muted">We'll never share your encoded string with
-                        anyone else.</small>
-                </div>
-                <button id="encodedStringSubmitButton" type="button" class="btn btn-primary">Submit</button>
-            </form>
-            <div id="encodedStringSubmitResponseContainer" class="py-2"></div>
+
+        <div class="row">
+
         </div>
     </div>
 
