@@ -52,12 +52,12 @@ func getHash(c *gin.Context) {
 	})
 }
 
-type HashSting struct {
+type HashString struct {
 	RawString string `form:"raw_string" json:"raw_string" xml:"raw_string"  binding:"required"`
 }
 
 func setHash(c *gin.Context) {
-	var json HashSting
+	var json HashString
 	if err := c.ShouldBindJSON(&json); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

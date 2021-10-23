@@ -36,9 +36,9 @@ function getCurrentBackendUrl() {
     }
 }
 
-const nodeRawStringSubmitButton = document.querySelector('#rawStringSubmitButton');
+const rawStringSubmitButton = document.querySelector('#rawStringSubmitButton');
 
-nodeRawStringSubmitButton.addEventListener('click', async (event) => {
+rawStringSubmitButton.addEventListener('click', async (event) => {
     const rawString = document.querySelector('#rawStringInput').value;
     console.log(rawString);
     const rawStringResponseContainer = document.querySelector('#rawStringSubmitResponseContainer');
@@ -55,9 +55,9 @@ nodeRawStringSubmitButton.addEventListener('click', async (event) => {
     rawStringResponseContainer.innerHTML = responseContainer.innerHTML;
 });
 
-const nodeGetStringSubmitButton = document.querySelector('#encodedStringSubmitButton');
+const getStringSubmitButton = document.querySelector('#encodedStringSubmitButton');
 
-nodeGetStringSubmitButton.addEventListener('click', async (event) => {
+getStringSubmitButton.addEventListener('click', async (event) => {
     const encodedString = document.querySelector('#encodedStringInput').value;
     console.log(encodedString);
     const encodedStringResponseContainer = document.querySelector('#encodedStringSubmitResponseContainer');
