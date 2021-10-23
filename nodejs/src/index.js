@@ -11,6 +11,12 @@ router.use(express.json());
 router.get("/sha", async (req, res) => {
   const { encoded } = req.query;
 
+  if (!encoded || encoded === "") {
+    res.statusCode = 400;
+    res.send({ errors: ["encoded param is required"] });
+    return;
+  }
+
   const rawString = await redis.get(encoded);
 
   if (rawString) {
@@ -24,7 +30,7 @@ router.get("/sha", async (req, res) => {
 router.post("/sha", async (req, res) => {
   const { raw_string: rawString } = req.body;
 
-  if (rawString.length >= 8) {
+  if (rawString?.length >= 8) {
     const hash = createHash("sha256");
 
     const encoded = hash.update(rawString).digest("hex");
@@ -38,7 +44,14 @@ router.post("/sha", async (req, res) => {
   res.send({ errors: ["raw_staring must be at least 8 characters"] });
 });
 
+
 app.use(router);
 app.listen(PORT, () => {
   console.log(`codec app started on port ${PORT}`);
+});
+app.use((err) => {
+  console.log(err);
+});
+process.on("error", (err) => {
+  console.log(err);
 });
