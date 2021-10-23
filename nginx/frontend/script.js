@@ -1,5 +1,5 @@
-const go_url = 'http://localhost:8000/go/sha256/';
-const node_url = 'http://localhost:8000/node/sha256/';
+const goUrl = 'http://localhost/go/sha256/';
+const nodeUrl = 'http://localhost/node/sha256/';
 
 
 function isRawStringValid(rawString) {
@@ -14,15 +14,15 @@ async function getEncodedString(url, encodedString) {
 }
 
 async function submitRawString(url, body) {
-    const json_body = JSON.stringify(body)
-    console.log(`Going to send post request, url=${url} body=${json_body}`);
+    const jsonBody = JSON.stringify(body)
+    console.log(`Going to send post request, url=${url} body=${jsonBody}`);
     const rawResponse = await fetch(url, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
-        body: json_body,
+        body: jsonBody,
     });
     const content = await rawResponse.json();
     return content;
@@ -30,9 +30,9 @@ async function submitRawString(url, body) {
 
 function getCurrentBackendUrl() {
     if (document.querySelector('input[type="radio"]:checked').id == 'goRadio') {
-        return go_url;
+        return goUrl;
     } else {
-        return node_url;
+        return nodeUrl;
     }
 }
 
