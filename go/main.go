@@ -59,7 +59,9 @@ type HashString struct {
 func setHash(c *gin.Context) {
 	var json HashString
 	if err := c.ShouldBindJSON(&json); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{
+			"errors": []string{"raw_staring must be at least 8 characters"},
+		})
 		return
 	}
 	raw_string := json.RawString

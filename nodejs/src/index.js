@@ -11,6 +11,12 @@ router.use(express.json());
 router.get("/sha", async (req, res) => {
   const { encoded } = req.query;
 
+  if (!encoded || encoded === "") {
+    res.statusCode = 400;
+    res.send({ errors: ["encoded param is required"] });
+    return;
+  }
+
   const rawString = await redis.get(encoded);
 
   if (rawString) {
