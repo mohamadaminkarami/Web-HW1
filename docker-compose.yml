@@ -14,14 +14,14 @@ services:
     depends_on:
       - redis
     deploy:
-      replicas: 2
+      replicas: ${GO_REPLICAS:-1}
 
   go_backend:
     build: ./go
     depends_on:
       - redis
     deploy:
-      replicas: 3
+      replicas: "${NODE_REPLICAS:-1}"
 
   redis:
     image: redis
