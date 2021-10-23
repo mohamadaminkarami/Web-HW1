@@ -38,7 +38,7 @@ router.post("/sha", async (req, res) => {
   res.send({ errors: ["raw_staring must be at least 8 characters"] });
 });
 
-app.use('/node', router);
+app.use(router);
 app.listen(PORT, () => {
   console.log(`codec app started on port ${PORT}`);
 });

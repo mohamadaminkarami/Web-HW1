@@ -16,8 +16,8 @@ import (
 
 func main() {
 	router := gin.Default()
-	router.GET("go/sha", getHash)
-	router.POST("go/sha", setHash)
+	router.GET("sha", getHash)
+	router.POST("sha", setHash)
 
 	err := router.Run(utils.GetEnv("SERVER_ADDR", "0.0.0.0:8080"))
 	if err != nil {
