@@ -29,8 +29,8 @@ func getHash(c *gin.Context) {
 	encoded := c.Query("encoded")
 
 	if encoded == "" {
-		c.JSON(http.StatusBadRequest, map[string]string{
-			"detail": "encoded param is required",
+		c.JSON(http.StatusBadRequest, gin.H{
+			"errors": []string{"encoded param is required"},
 		})
 		return
 	}
@@ -40,7 +40,7 @@ func getHash(c *gin.Context) {
 	switch {
 	case err == redis.Nil:
 		c.JSON(http.StatusNotFound, gin.H{
-			"detail": "key not found",
+			"errors": []string{"sha256 hash not found!"},
 		})
 		return
 	case err != nil:
@@ -48,21 +48,21 @@ func getHash(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"detail": value,
+		"raw_string": value,
 	})
 }
 
 func setHash(c *gin.Context) {
-	decoded := c.PostForm("decoded")
+	raw_string := c.PostForm("raw_string")
 
-	if len(decoded) < 8 {
+	if len(raw_string) < 8 {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"detail": "input must be at least 8 characters",
+			"errors": []string{"raw_staring must be at least 8 characters"},
 		})
 		return
 	}
 
-	input := strings.NewReader(decoded)
+	input := strings.NewReader(raw_string)
 
 	hash := sha256.New()
 	if _, err := io.Copy(hash, input); err != nil {
@@ -71,11 +71,11 @@ func setHash(c *gin.Context) {
 	sum := hash.Sum(nil)
 	encoded := hex.EncodeToString(sum)
 
-	err := redisInterface.SetValueRedis(encoded, decoded)
+	err := redisInterface.SetValueRedis(encoded, raw_string)
 	if err != nil {
 		panic(err)
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"detail": encoded,
+		"encoded": encoded,
 	})
 }

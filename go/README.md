@@ -31,19 +31,19 @@ You can encode your strings(at least 8 characters) to sha256 hash with.
 Send POST request with body:
 ```json
 {
-    "decoded": "at-least-8-character string"
+    "raw_string": "at-least-8-character string"
 }
 ```
 If your string is less than 8 characters web server returns following response:
 ```json
 {
-  "detail": "input must be at least 8 characters"
+  "errors": ["raw_staring must be at least 8 characters"]
 }
 ```
 Otherwise, you will get encoded hash in hex:
 ```json
 {
-    "detail": "encoded hash in hex"
+    "encoded": "encoded hash in hex"
 } 
 ```
 
@@ -57,13 +57,13 @@ Send GET request with query params:
 If your hash does not exist on database response will be:
 ```json
 {
-  "detail": "key not found"
+  "errors": ["sha256 hash not found!"]
 }
 ```
 Otherwise you will get decoded string:
 ```json
 {
-    "detail": "decoded string"
+    "raw_string": "decoded string"
 } 
 ```
 
