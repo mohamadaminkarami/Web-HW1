@@ -2,7 +2,7 @@ const express = require("express");
 const { createHash } = require("crypto");
 const { PORT } = require("./config");
 
-const redis = require("./redis");
+const redis = require("./utils/redis");
 const validateEncodedString = require("./validatiors/encoded-string-validator");
 const validateRawString = require("./validatiors/raw-string-validator");
 
