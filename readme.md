@@ -10,7 +10,7 @@ NODE_REPLICAS=1
 
 ```
 
-## Running project(Prodution mode)
+## Running project
 
 After cloning project, Run following commands:
 

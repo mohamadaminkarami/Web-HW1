@@ -21,7 +21,7 @@ services:
     depends_on:
       - redis
     deploy:
-      replicas: "${NODE_REPLICAS:-1}"
+      replicas: ${NODE_REPLICAS:-1}
 
   redis:
     image: redis
