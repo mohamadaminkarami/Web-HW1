@@ -3,7 +3,8 @@ const { createHash } = require("crypto");
 const { PORT } = require("./config");
 
 const redis = require("./redis");
-const validateEncodedString = require("./validatiors/validate-encoded-string");
+const validateEncodedString = require("./validatiors/encoded-string-validator");
+const validateRawString = require("./validatiors/raw-string-validator");
 
 const app = express();
 const router = express.Router();
@@ -16,7 +17,7 @@ router.get("/sha", async (req, res) => {
     validateEncodedString(encoded);
   } catch (err) {
     res.statusCode = 400;
-    res.send({ errors: [err] });
+    res.send({ errors: [err.message] });
   }
 
   const rawString = await redis.get(encoded);
@@ -35,8 +36,9 @@ router.post("/sha", async (req, res) => {
   try {
     validateRawString(rawString);
   } catch (err) {
+    console.log(err)
     res.statusCode = 400;
-    res.send({ errors: [err] });
+    res.send({ errors: [err.message] });
     return;
   }
 
@@ -47,7 +49,6 @@ router.post("/sha", async (req, res) => {
   await redis.set(encoded, rawString);
   res.send({ encoded });
 });
-
 
 app.use(router);
 app.listen(PORT, () => {
