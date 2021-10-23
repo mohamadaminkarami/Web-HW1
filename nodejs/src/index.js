@@ -16,8 +16,10 @@ router.get("/sha", async (req, res) => {
   try {
     validateEncodedString(encoded);
   } catch (err) {
+    console.error(err);
     res.statusCode = 400;
     res.send({ errors: [err.message] });
+    return;
   }
 
   const rawString = await redis.get(encoded);
@@ -36,7 +38,7 @@ router.post("/sha", async (req, res) => {
   try {
     validateRawString(rawString);
   } catch (err) {
-    console.log(err)
+    console.error(err);
     res.statusCode = 400;
     res.send({ errors: [err.message] });
     return;

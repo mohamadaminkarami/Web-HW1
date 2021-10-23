@@ -4,7 +4,7 @@ services:
   client:
     build: ./nginx
     ports:
-      - 80:80
+      - 8000:80
     depends_on:
       - node_backend
       - go_backend
