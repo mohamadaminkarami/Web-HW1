@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"io"
+	"log"
 	"net/http"
 	"strings"
 
@@ -15,13 +16,15 @@ import (
 )
 
 func main() {
+	redisInterface.PingRedis()
+
 	router := gin.Default()
 	router.GET("sha", getHash)
 	router.POST("sha", setHash)
 
 	err := router.Run(utils.GetEnv("SERVER_ADDR", "0.0.0.0:8080"))
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 }
 

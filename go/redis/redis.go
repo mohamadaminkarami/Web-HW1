@@ -2,6 +2,7 @@ package redis
 
 import (
 	"context"
+	"log"
 	"strconv"
 
 	"github.com/mohamadaminkarami/Web-HW1/utils"
@@ -23,6 +24,15 @@ func initRedis() *redis.Client {
 		Password: utils.GetEnv("REDIS_PASSWORD", ""), // no password set
 		DB:       redisDB,                            // use default DB = 0
 	})
+}
+
+func PingRedis() {
+	_, err := rdb.Ping(ctx).Result()
+	if err == nil {
+		log.Println("connected to redis successfully")
+	} else {
+		log.Panic("Cannot connect to redis")
+	}
 }
 
 func GetValueRedis(key string) (string, error) {
