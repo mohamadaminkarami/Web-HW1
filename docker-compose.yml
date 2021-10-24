@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.9"
 
 services:
   client:
@@ -14,15 +14,34 @@ services:
     depends_on:
       - redis
     deploy:
-      replicas: ${GO_REPLICAS:-1}
+      replicas: ${NODE_REPLICAS:-1}
+      resources:
+        limits:
+            cpus: ${NODE_CPUS:-0.125} 
+            memory: ${NODE_MEM:-100M}
+        reservations:
+          cpus: ${NODE_CPUS_RES:-0.125} 
+          memory: ${NODE_MEM_RES:-50M}
 
   go_backend:
     build: ./go
     depends_on:
       - redis
     deploy:
-      replicas: ${NODE_REPLICAS:-1}
+      replicas: ${GO_REPLICAS:-1}
+      resources:
+        limits:
+            cpus: ${GO_CPUS:-0.125} 
+            memory: ${GO_MEM:-100M}
+        reservations:
+          cpus: ${GO_CPUS_RES:-0.125} 
+          memory: ${GO_MEM_RES:-50M}
 
   redis:
     image: redis
     restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: ${REDIS_CPUS:-0.125} 
+          memory: ${REDIS_MEM:-1G}
