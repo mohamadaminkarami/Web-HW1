@@ -47,7 +47,7 @@ rawStringSubmitButton.addEventListener('click', async (event) => {
     if (isRawStringValid(rawString)) {
         console.log('success');
         const responseData = await submitRawString(getCurrentBackendUrl(), { raw_string: rawString });
-        responseContainer = getSuccessComponent(`Your sha hash: ${responseData.encoded}`);
+        responseContainer = getSuccessComponent(`Your sha string: ${responseData.encoded}`);
     } else {
         console.log('failure');
         responseContainer = getAlertComponent('Input should at least be 8 characters.');
