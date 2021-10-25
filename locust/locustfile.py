@@ -73,13 +73,16 @@ class CustomUser(HttpUser):
         encoded = response.json().get("encoded", None)
         if encoded:
             stored_hashes.append(encoded)
-    # @task
-    # def get_sha_go(self):
-    #     encoded = get_random_hash()
-    #     self.client.get(f"/go/sha256/?encoded={encoded}")
+    @task
+    def get_sha_go(self):
+        encoded = get_random_hash()
+        self.client.get(f"/go/sha256/?encoded={encoded}")
 
-    # @task(10)
-    # def set_sha_go(self):
-    #     decoded = get_random_raw_string()
-    #     data = {"raw_string": decoded}
-    #     self.client.post("/go/sha256/", json=data)
+    @task(10)
+    def set_sha_go(self):
+        decoded = get_random_raw_string()
+        data = {"raw_string": decoded}
+        response = self.client.post("/node/sha256/", json=data)
+        encoded = response.json().get("encoded", None)
+        if encoded:
+            stored_hashes.append(encoded)
