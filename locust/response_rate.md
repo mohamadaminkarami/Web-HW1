@@ -37,7 +37,7 @@ you can see the jump in the report.
 ![report graph image](https://github.com/mohamadaminkarami/Web-HW1/blob/main/locust/images/test_harder_after_moderate.png)
 
 ## Both servers 100 users replication mode
-2 node backends 3 go backends with same resources as before.
+2 node backends 3 go backends with same resources as before.  <br/>
 using CORRECT_POST_REQUEST_PERCENTAGE=90 <br/>
 using CORRECT_GET_REQUEST_PERCENTAGE = 90 <br/>
 for 100 users (about 300 RPS) <br/>
