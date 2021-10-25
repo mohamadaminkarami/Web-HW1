@@ -14,7 +14,7 @@ requests that actually fail (10 percent) <br/>
 | web-hw1_node_backend_1 | 12%    |  27MiB   |
 | web-hw1_redis_1 | 1%    |  increasing by time   |
 
-report graph image: ./images/test_one_moderate.png
+![report graph image](https://github.com/mohamadaminkarami/Web-HW1/blob/main/locust/images/test_one_moderate.png)
 
 ## Both servers 1000 users
 using CORRECT_POST_REQUEST_PERCENTAGE=90 <br/>
@@ -33,4 +33,5 @@ with more load cpu usage didn't seem to change but memory usage increased for no
 
 response time increased greatly from around 700 ms to 8000 ms.
 you can see the jump in the report.
-report graph image: ./images/test_harder_after_moderate.png
+
+![report graph image](https://github.com/mohamadaminkarami/Web-HW1/blob/main/locust/images/test_harder_after_moderate.png)
