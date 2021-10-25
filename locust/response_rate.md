@@ -55,5 +55,6 @@ requests that actually fail (10 percent) <br/>
 
 with more backend replicas cpu usage and memory usage stays nearly the same but the RPS handled is about twice and response time is a bit better. (600ms) <br/>
 
-and there is more load on nginx probably because of load balancing and increase in RPs.
+and there is more load on nginx probably because of load balancing and increase in RPS.
+
 ![report graph image](https://github.com/mohamadaminkarami/Web-HW1/blob/main/locust/images/test_replication.png)
